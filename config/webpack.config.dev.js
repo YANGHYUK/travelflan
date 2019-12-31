@@ -11,13 +11,15 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname + "/build")
+    path: path.resolve(__dirname + "/build"),
+    publicPath: "/"
   },
   devServer: {
     //webpack-dev-server 매번 수정할때마다 yarn build를 해주어야하는 번거로운 일을 해결하기 위해
     contentBase: path.resolve("./build"),
     index: "index.html",
-    port: 3000
+    port: 3000,
+    historyApiFallback: true
   },
   mode: "development", //production or development를 설정해줘야 용도에 맞게 사용가능
   module: {
