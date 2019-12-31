@@ -1,21 +1,14 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
+
 import "./scss/style.scss";
 import { Link } from "react-router-dom";
-
-const Container = styled.div`
-  height: 100vh;
-  width: 100%;
-  background-color: rgb(0, 0, 0, 0.5);
-  margin: 0;
-  padding: 0;
-`;
+import { Container } from "./components/StyledComponents";
 
 const Home = props => {
-  // useEffect(() => {
-  //   let token = localStorage.getItem("token");
-  //   token ? props.history.push("/") : props.history.push("/signin");
-  // });
+  useEffect(() => {
+    let token = localStorage.getItem("token");
+    token ? props.history.push("/") : props.history.push("/signin");
+  });
   return (
     <Container>
       {/* <h3 className="title">Home.js</h3> */}
@@ -30,6 +23,7 @@ export default Home;
 // import React, { useState } from "react";
 
 // import Counter from "./components/Counter";
+// import Container from './components/Container';
 // export const doIncrement = prevState => ({
 //   counter: prevState.counter + 1
 // });
