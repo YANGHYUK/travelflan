@@ -1,21 +1,32 @@
-import React from "react";
+import React, { useEffect } from "react";
+import styled from "styled-components";
 import "./scss/style.scss";
 import { Link } from "react-router-dom";
-const Home = () => {
+
+const Container = styled.div`
+  height: 100vh;
+  width: 100%;
+  background-color: rgb(0, 0, 0, 0.5);
+  margin: 0;
+  padding: 0;
+`;
+
+const Home = props => {
+  // useEffect(() => {
+  //   let token = localStorage.getItem("token");
+  //   token ? props.history.push("/") : props.history.push("/signin");
+  // });
   return (
-    <div>
-      <h3 className="title">Home.js</h3>
-      <li>
-        <Link to="/signup">SignUp</Link>
-      </li>
-      <li>
-        <Link to="/signin">SignIn</Link>
-      </li>
-    </div>
+    <Container>
+      {/* <h3 className="title">Home.js</h3> */}
+      <Link to="/signin">SignIn</Link>
+      <Link to="/signup">SignUp</Link>
+    </Container>
   );
 };
 
 export default Home;
+
 // import React, { useState } from "react";
 
 // import Counter from "./components/Counter";
