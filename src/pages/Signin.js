@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import {
   Container,
@@ -11,6 +10,9 @@ import { Link } from "react-router-dom";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
+import ProgressBar from "../components/ProgressBar";
+
+import UserInfoContext from "../contextAPI/UserInfo";
 
 //link
 const StyledLink = styled(Link)`
@@ -25,7 +27,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const StyledTd = styled.td`
+const StyledTd = styled.p`
   min-width: 120px;
   text-align: center;
   vertical-align: middle;
@@ -40,7 +42,7 @@ const SignContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding-top: 25px;
@@ -106,7 +108,9 @@ const doOnChange = (values, errors, name, value) => ({
   [name]: value
 });
 
-const Signin = () => {
+const Signin = props => {
+  const [loading, setLoading] = useState(false);
+
   const [values, setValues] = useState({
     errors: { email: "", password: "" },
     email: "",
@@ -144,13 +148,32 @@ const Signin = () => {
     }
   };
 
-  const onSubmit = () => {};
+  const UserInfo = useContext(UserInfoContext);
+
+  const onSubmit = () => {
+    setLoading(true);
+    setTimeout(() => {
+      //1번 로컬스토리지에 토큰 있으면, 현재 입력값과 토큰값이 일치하는지 확인
+      let token = localStorage.getItem("token");
+      let savedUserInfo = token.split("/").join("");
+      savedUserInfo === email + password ? props.history.push("/") : null;
+
+      //2번 로컬스토리지에 토큰 없다면 DB에 저장되어있다고 치는 하드코딩된 context api 값 확인
+      UserInfo.filter(ele => {
+        if (ele.email === email && ele.password === password) {
+          localStorage.setItem("token", email + "/" + password);
+          props.history.push("/");
+        }
+      });
+    }, 1000);
+  };
 
   return (
     <Container>
       <Row>
         <Column xs="12" sm="12" md="12">
           <SignContainer>
+            {loading ? <ProgressBar /> : <MarginDiv margin="20px 0 20px 0" />}
             <SigninBox>
               <Row>
                 <Column xs="12" md="12" lg="6">
@@ -195,7 +218,7 @@ const Signin = () => {
                           ? true
                           : false
                       }
-                      onSubmit={onSubmit}
+                      onClick={onSubmit}
                       name="로그인"
                     />
                     <div

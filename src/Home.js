@@ -11,10 +11,9 @@ const Home = props => {
     let token = localStorage.getItem("token");
     doCheckToken();
     token ? props.history.push("/") : props.history.push("/signin");
-  });
+  }, []);
   return (
     <Container>
-      {/* <h3 className="title">Home.js</h3> */}
       <Link to="/signin">SignIn</Link>
       <Link to="/signup">SignUp</Link>
     </Container>

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import {
   Container,
@@ -11,6 +10,7 @@ import { Link } from "react-router-dom";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
+import ProgressBar from "../components/ProgressBar";
 
 //link
 const StyledLink = styled(Link)`
@@ -25,7 +25,7 @@ const StyledLink = styled(Link)`
   }
 `;
 
-const StyledTd = styled.td`
+const StyledTd = styled.p`
   min-width: 120px;
   text-align: center;
   vertical-align: middle;
@@ -40,7 +40,7 @@ const SignContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   padding-top: 25px;
@@ -106,7 +106,9 @@ const doOnChange = (values, errors, name, value) => ({
   [name]: value
 });
 
-const Signup = () => {
+const Signup = props => {
+  const [loading, setLoading] = useState(false);
+
   const [values, setValues] = useState({
     errors: { email: "", password: "" },
     email: "",
@@ -135,7 +137,6 @@ const Signup = () => {
       default:
         break;
     }
-
     if (value.length) {
       setValues(() => doOnChange(values, errors, name, value));
     } else {
@@ -144,13 +145,20 @@ const Signup = () => {
     }
   };
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    setLoading(true);
+    setTimeout(() => {
+      localStorage.setItem("token", email + "/" + password);
+      props.history.push("/signin");
+    }, 1000);
+  };
 
   return (
     <Container>
       <Row>
         <Column xs="12" sm="12" md="12">
           <SignContainer>
+            {loading ? <ProgressBar /> : <MarginDiv margin="20px 0 20px 0" />}
             <SignupBox>
               <Row>
                 <Column xs="12" md="12" lg="6">
@@ -165,7 +173,7 @@ const Signup = () => {
                 <Column xs="12" md="12" lg="6">
                   <SignupBox_right>
                     <div style={{ color: "white", fontSize: "30px" }}>
-                      SIGN IN
+                      SIGN UP
                     </div>
                     <MarginDiv margin="30px 0 10px 0" />
                     <Input
@@ -195,7 +203,7 @@ const Signup = () => {
                           ? true
                           : false
                       }
-                      onSubmit={onSubmit}
+                      onClick={onSubmit}
                       name="회원가입"
                     />
                     <div

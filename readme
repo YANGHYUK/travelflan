@@ -1,6 +1,6 @@
 환경설정
 
-1. yarn init -y 
+1. yarn init -y
 
 2. webpack.config.js 설정
 => package.json에 babel, webpack, html-loader, css, sass 관련 모듈 설정 후 config 설정
@@ -20,3 +20,4 @@
 => yarn add -D ignore-styles (스타일은 테스트에서 무시하기 위해)
 => mocha에서는 테스트를 실행할 때, 특정 테스트만 수행하고 싶으면 Mocha의 테스트 필터 기능인 --grep을 사용한다.
 
+7. jsonwebtoken 설치

@@ -32,9 +32,9 @@ const StyledButton = styled.button`
   outline-style: none;
 `;
 
-export default function Button({ active, onSubmit, name }) {
+export default function Button({ active, onClick, name }) {
   return (
-    <StyledButton active={active} onSubmit={onSubmit}>
+    <StyledButton active={active} onClick={onClick}>
       {name}
     </StyledButton>
   );
