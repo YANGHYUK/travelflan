@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   height: 100vh;
   width: 100%;
-  background: rgb(0, 0, 0, 0.3);
+  background: linear-gradient(to right, #5f57ea 0%, #9647db 100%);
 `;
 
 export const Row = styled.div`
@@ -11,7 +11,9 @@ export const Row = styled.div`
     content: "";
     clear: both;
     display: table;
+    width: 100%;
   }
+  width: 100%;
 `;
 
 function getWidthString(span) {
@@ -33,4 +35,8 @@ export const Column = styled.div`
   @media only screen and (min-width: 1200px) {
     ${({ lg }) => lg && getWidthString(lg)};
   }
+`;
+
+export const MarginDiv = styled.div`
+  margin: ${props => props.margin};
 `;

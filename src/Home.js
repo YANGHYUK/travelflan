@@ -4,9 +4,12 @@ import "./scss/style.scss";
 import { Link } from "react-router-dom";
 import { Container } from "./components/StyledComponents";
 
+const doCheckToken = () => true;
+
 const Home = props => {
   useEffect(() => {
     let token = localStorage.getItem("token");
+    doCheckToken();
     token ? props.history.push("/") : props.history.push("/signin");
   });
   return (
