@@ -102,7 +102,7 @@ const ErrorMessage = styled.div`
   height: 20px;
 `;
 
-const doOnChange = (values, errors, name, value) => ({
+export const doOnChange = (values, errors, name, value) => ({
   ...values,
   errors,
   [name]: value
@@ -156,7 +156,9 @@ const Signin = props => {
       //1번 로컬스토리지에 토큰 있으면, 현재 입력값과 토큰값이 일치하는지 확인
       let token = localStorage.getItem("token");
       let savedUserInfo = token.split("/").join("");
-      savedUserInfo === email + password ? props.history.push("/") : null;
+      if (savedUserInfo === email + password) {
+        props.history.push("/");
+      }
 
       //2번 로컬스토리지에 토큰 없다면 DB에 저장되어있다고 치는 하드코딩된 context api 값 확인
       UserInfo.filter(ele => {

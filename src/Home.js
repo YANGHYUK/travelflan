@@ -4,7 +4,7 @@ import "./scss/style.scss";
 import { Link } from "react-router-dom";
 import { Container } from "./components/StyledComponents";
 
-const doCheckToken = () => true;
+export const doCheckToken = () => true;
 
 const Home = props => {
   useEffect(() => {

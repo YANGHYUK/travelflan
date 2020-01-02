@@ -39,6 +39,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
+    "enzyme-adapter-react-16": "^1.15.2",
     "jsonwebtoken": "^8.5.1",
     "react-router-dom": "^5.1.2",
     "styled-components": "^4.4.1",

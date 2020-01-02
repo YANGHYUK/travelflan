@@ -15,9 +15,9 @@ const Filler = ({ percentage }) => {
 const StyledProgressBar = styled.div`
   position: relative;
   height: 18px;
-  width: 350px;
+  width: 50%;
   border-radius: 50px;
-  border: 1px solid #333;
+  border: 1px solid #ecf0f1;
   margin-top: 5px;
   margin-bottom: 15px;
 `;
