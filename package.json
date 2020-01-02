@@ -40,6 +40,7 @@
   },
   "dependencies": {
     "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.4.3",
     "jsonwebtoken": "^8.5.1",
     "react-router-dom": "^5.1.2",
     "styled-components": "^4.4.1",
