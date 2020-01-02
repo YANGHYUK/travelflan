@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Container } from "./components/StyledComponents";
+import { Container } from "./components/ResponsiveComponents";
 
 export const doCheckToken = () => true;
 

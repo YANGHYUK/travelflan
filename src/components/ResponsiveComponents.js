@@ -40,6 +40,7 @@ export const Text = styled.span`
   color: ${props => props.color};
   margin: ${props => props.margin};
   font-weight: ${props => props.fontWeight};
+  word-break: keep-all;
 `;
 
 //컴포넌트
@@ -50,22 +51,4 @@ export const Container = styled.div`
   min-height: 100vh;
   width: 100%;
   background: linear-gradient(to right, #5f57ea 0%, #9647db 100%);
-`;
-export const Header = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-  height: 70px;
-  background: linear-gradient(to right, #686de0 0%, #9647db 100%);
-  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
-  -webkit-background-clip: padding-box;
-  -moz-background-clip: padding-box;
-  background-clip: padding-box;
 `;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Row, Column, MarginDiv } from "./StyledComponents";
+import { Row, Column, MarginDiv, Text } from "./ResponsiveComponents";
 
 const ListContainer = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ const ListCard = styled.div`
   margin-right: 15px;
   margin-bottom: 100px;
   max-width: 500px;
-  min-height: 200px;
+  min-height: 250px;
   padding: 20px;
   -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
   -moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
@@ -47,7 +47,27 @@ const ContentBox = styled.div`
   width: 100%;
 `;
 
-const ImageBox = styled.div``;
+const UserImage = styled.div`
+  background-size: contain;
+  background-image: url(${props => props.url});
+  background-repeat: no-repeat;
+  background-position: center center;
+  border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  margin-bottom: 10px;
+`;
+
+const ImageBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
 
 const showDataList = data => {
   return data.map((ele, idx) => {
@@ -58,9 +78,15 @@ const showDataList = data => {
       <Column xs="6" sm="6" md="4" lg="2.4" key={idx}>
         <ListCard>
           <ContentBox>
-            <div>userId:{userId}</div>
-            <div>id:{id}</div>
-            <div>title:{title}</div>
+            <ImageBox>
+              <UserImage url="https://www.logolynx.com/images/logolynx/s_cb/cbd29542455b9e0cc175289ff24cecaa.jpeg" />
+              <Text>user:{userId}</Text>
+            </ImageBox>
+            <div>
+              <Text fontSize="20px">{title}</Text>
+            </div>
+
+            {/* <div>id:{id}</div> */}
           </ContentBox>
           <Image />
         </ListCard>

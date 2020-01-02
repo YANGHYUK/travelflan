@@ -13,6 +13,7 @@ require("babel-polyfill");
 module.exports = {
   entry: ["babel-polyfill", "./src/index.js"],
   // entry: "./src/index.js",
+  loaders: [{ test: /\.js$/, loader: "babel", query: { compact: false } }],
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname + "/build"),

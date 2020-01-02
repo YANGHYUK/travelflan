@@ -6,7 +6,7 @@ import {
   Row,
   Column,
   MarginDiv
-} from "../components/StyledComponents";
+} from "../components/ResponsiveComponents";
 
 import Input from "../components/Input";
 import Button from "../components/Button";

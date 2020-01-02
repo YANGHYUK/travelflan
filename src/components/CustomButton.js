@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-  min-width: ${props => (props.width ? props.width : "220px")};
-  height:${props => (props.height ? props.height : "48px")};
-  border: solid 1px #cdcfd4;
+  min-width: ${props => (props.width ? props.width : "150px")};
+  height:${props => (props.height ? props.height : "36px")};
+
   border-radius:10px;
   font-family: NotoSansKR;
   font-size: 15px;
@@ -16,12 +16,13 @@ const StyledButton = styled.button`
   text-align: center;
   color: white;
   text-decoration: none;
-  background-color: ${props => (props.active ? "#184954" : "#cdcfd4 ")}
-  cursor: ${props => (props.active ? "pointer" : null)}
-  border: ${props => (props.active ? "solid 1px #247082" : null)}
+  background-color: ${props =>
+    props.backgroundColor ? props.backgroundColor : "#dfe6e9"}
+  cursor:pointer;
   &:hover {
-    background-color:#247082;
-    border: none;
+    background-color:white;
+    border: solid 1px #cdcfd4;
+    color:#34495e;
   }
   margin-top:10px;
   margin-bottom: 10px;
@@ -31,7 +32,7 @@ const StyledButton = styled.button`
   outline-style: none;
 `;
 
-export default function Button({ active, onClick, name }) {
+export default function CustomButton({ active, onClick, name }) {
   return (
     <StyledButton active={active} onClick={onClick}>
       {name}
