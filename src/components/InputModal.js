@@ -92,10 +92,10 @@ const InputModal = ({ setModalOpen, userId, title, onChagne, onSubmit }) => {
             <Image url="https://via.placeholder.com/150" />
           </div>
         </div>
-        <div className="button-wrap">
+        {/* <div className="button-wrap">
           <button onClick={() => setModalOpen(false)}> Cancel </button>
           <button onClick={onSubmit}> Enroll </button>
-        </div>
+        </div> */}
       </ModalContent>
     </React.Fragment>
   );

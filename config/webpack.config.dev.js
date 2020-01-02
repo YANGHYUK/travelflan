@@ -12,12 +12,11 @@ require("babel-polyfill");
 
 module.exports = {
   entry: ["babel-polyfill", "./src/index.js"],
-  // entry: "./src/index.js",
-  loaders: [{ test: /\.js$/, loader: "babel", query: { compact: false } }],
+
   output: {
     filename: "bundle.js",
-    path: path.resolve(__dirname + "/build"),
-    publicPath: "/"
+    path: path.resolve(__dirname + "/build")
+    // publicPath: "./src"
   },
   devServer: {
     //webpack-dev-server 매번 수정할때마다 yarn build를 해주어야하는 번거로운 일을 해결하기 위해
@@ -53,6 +52,7 @@ module.exports = {
       }
     ]
   },
+  externals: ["fs"],
   plugins: [
     new HtmlWebPackPlugin({
       template: "./public/index.html", //public하위 index.html을 템플릿으로 읽는다.

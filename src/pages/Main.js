@@ -46,12 +46,12 @@ const Main = props => {
   const [page, setPage] = useState(0);
   const [myId, setMyId] = useState("");
 
-  const [formData, setFormData] = useState({
-    userId: myId,
-    id: data.length,
-    title: "",
-    image: null
-  });
+  // const [formData, setFormData] = useState({
+  //   userId: myId,
+  //   id: data.length,
+  //   title: "",
+  //   image: null
+  // });
 
   const onhandleChange = e => {
     let value = e.target.value;

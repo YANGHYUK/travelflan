@@ -51,6 +51,7 @@
     "babel-polyfill": "^6.26.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.3",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
     "react-router-dom": "^5.1.2",
     "styled-components": "^4.4.1",
