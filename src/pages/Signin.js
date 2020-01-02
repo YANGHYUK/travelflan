@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
   Container,
@@ -6,11 +7,11 @@ import {
   Column,
   MarginDiv
 } from "../components/StyledComponents";
-import { Link } from "react-router-dom";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
 import ProgressBar from "../components/ProgressBar";
+import Modal from "../components/Modal";
 
 import UserInfoContext from "../contextAPI/UserInfo";
 
@@ -32,7 +33,6 @@ const StyledTd = styled.p`
   text-align: center;
   vertical-align: middle;
   color: #bdc3c7;
-
   &:hover {
     color: white;
   }
@@ -111,6 +111,8 @@ export const doOnChange = (values, errors, name, value) => ({
 const Signin = props => {
   const [loading, setLoading] = useState(false);
 
+  const [modalOpen, setModalOpen] = useState(false);
+
   const [values, setValues] = useState({
     errors: { email: "", password: "" },
     email: "",
@@ -121,7 +123,6 @@ const Signin = props => {
   const { errors, email, password } = values;
 
   const onChange = e => {
-    event.preventDefault();
     let { name, value } = e.target;
     const validEmailRegex = RegExp(
       /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -153,25 +154,47 @@ const Signin = props => {
   const onSubmit = () => {
     setLoading(true);
     setTimeout(() => {
-      //1번 로컬스토리지에 토큰 있으면, 현재 입력값과 토큰값이 일치하는지 확인
       let token = localStorage.getItem("token");
-      let savedUserInfo = token.split("/").join("");
-      if (savedUserInfo === email + password) {
-        props.history.push("/");
-      }
-
-      //2번 로컬스토리지에 토큰 없다면 DB에 저장되어있다고 치는 하드코딩된 context api 값 확인
+      //1번 로컬스토리지에 토큰 있으면, 현재 입력값과 토큰값이 일치하는지 확인
       UserInfo.filter(ele => {
         if (ele.email === email && ele.password === password) {
           localStorage.setItem("token", email + "/" + password);
-          props.history.push("/");
+          props.history.push("/main");
         }
       });
-    }, 1000);
+
+      //1번 로컬스토리지에 토큰 없다면 DB에 저장되어있다고 치는 하드코딩된 context api 값 확인
+      if (token) {
+        let savedUserInfo = token.split("/").join("");
+        if (savedUserInfo === email + password) {
+          props.history.push("/main");
+        }
+      } else {
+        //회원가입한 아이디랑 UserInfo에 저장되어있는 아이디가 아니면 알림 모달 출현
+        setModalOpen(true);
+        setLoading(false);
+        resetForm();
+      }
+    }, 600);
+  };
+
+  const resetForm = () => {
+    setValues({
+      errors: { email: "", password: "" },
+      email: "",
+      password: "",
+      active: false
+    });
   };
 
   return (
     <Container>
+      {modalOpen ? (
+        <Modal
+          setModalOpen={setModalOpen}
+          content="아이디 혹은 비밀번호를 확인해주세요"
+        />
+      ) : null}
       <Row>
         <Column xs="12" sm="12" md="12">
           <SignContainer>
@@ -194,6 +217,7 @@ const Signin = props => {
                     </div>
                     <MarginDiv margin="30px 0 10px 0" />
                     <Input
+                      id="email"
                       type="email"
                       name="email"
                       value={email || ""}
@@ -203,6 +227,7 @@ const Signin = props => {
                     <ErrorMessage>{errors.email}</ErrorMessage>
                     <MarginDiv margin="30px 0 10px 0" />
                     <Input
+                      id="password"
                       type="password"
                       name="password"
                       value={password || ""}
@@ -212,6 +237,7 @@ const Signin = props => {
                     <ErrorMessage>{errors.password}</ErrorMessage>
                     <MarginDiv margin="30px 0 10px 0" />
                     <Button
+                      id="login_button"
                       active={
                         email.length &&
                         password.length &&
@@ -220,7 +246,14 @@ const Signin = props => {
                           ? true
                           : false
                       }
-                      onClick={onSubmit}
+                      onClick={
+                        email.length &&
+                        password.length &&
+                        !errors.email &&
+                        !errors.password
+                          ? onSubmit
+                          : null
+                      }
                       name="로그인"
                     />
                     <div
@@ -231,7 +264,7 @@ const Signin = props => {
                         justifyContent: "flex-end"
                       }}
                     >
-                      <StyledLink to="/signup">
+                      <StyledLink to="/signup" id="signup_link">
                         <StyledTd>SIGN UP</StyledTd>
                       </StyledLink>
                     </div>

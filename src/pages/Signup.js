@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
   Container,
@@ -6,7 +7,6 @@ import {
   Column,
   MarginDiv
 } from "../components/StyledComponents";
-import { Link } from "react-router-dom";
 
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -150,7 +150,7 @@ const Signup = props => {
     setTimeout(() => {
       localStorage.setItem("token", email + "/" + password);
       props.history.push("/signin");
-    }, 1000);
+    }, 600);
   };
 
   return (
@@ -177,6 +177,7 @@ const Signup = props => {
                     </div>
                     <MarginDiv margin="30px 0 10px 0" />
                     <Input
+                      id="email"
                       type="email"
                       name="email"
                       value={email || ""}
@@ -186,6 +187,7 @@ const Signup = props => {
                     <ErrorMessage>{errors.email}</ErrorMessage>
                     <MarginDiv margin="30px 0 10px 0" />
                     <Input
+                      id="password"
                       type="password"
                       name="password"
                       value={password || ""}
@@ -195,6 +197,7 @@ const Signup = props => {
                     <ErrorMessage>{errors.password}</ErrorMessage>
                     <MarginDiv margin="30px 0 10px 0" />
                     <Button
+                      id="signup_button"
                       active={
                         email.length &&
                         password.length &&
@@ -203,7 +206,14 @@ const Signup = props => {
                           ? true
                           : false
                       }
-                      onClick={onSubmit}
+                      onClick={
+                        email.length &&
+                        password.length &&
+                        !errors.email &&
+                        !errors.password
+                          ? onSubmit
+                          : null
+                      }
                       name="회원가입"
                     />
                     <div
@@ -214,7 +224,7 @@ const Signup = props => {
                         justifyContent: "flex-end"
                       }}
                     >
-                      <StyledLink to="/signin">
+                      <StyledLink to="/signin" id="signin_link">
                         <StyledTd>SIGN IN</StyledTd>
                       </StyledLink>
                     </div>

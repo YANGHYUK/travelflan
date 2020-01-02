@@ -6,6 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server --config ./config/webpack.config.dev --hot",
     "build": "webpack --config ./config/webpack.config.prod",
+    "jest": "jest",
     "test:unit": "mocha --require @babel/register --require ./test/helpers.js --require ./test/dom.js 'src/**/*.spec.js'",
     "test:unit:watch": "npm run test:unit -- --watch"
   },
@@ -19,7 +20,9 @@
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "@babel/register": "^7.7.7",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
     "chai": "^4.2.0",
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.4.0",
@@ -30,6 +33,7 @@
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "ignore-styles": "^5.0.1",
+    "jest": "^24.9.0",
     "jsdom": "^15.2.1",
     "mini-css-extract-plugin": "^0.9.0",
     "mocha": "^6.2.2",
@@ -44,6 +48,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.3",
     "jsonwebtoken": "^8.5.1",

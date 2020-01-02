@@ -1,11 +1,5 @@
 import styled from "styled-components";
-
-export const Container = styled.div`
-  height: 100vh;
-  width: 100%;
-  background: linear-gradient(to right, #5f57ea 0%, #9647db 100%);
-`;
-
+//반응형 레이아웃
 export const Row = styled.div`
   &::after {
     content: "";
@@ -39,4 +33,32 @@ export const Column = styled.div`
 
 export const MarginDiv = styled.div`
   margin: ${props => props.margin};
+`;
+
+export const Text = styled.span`
+  font-size: ${props => props.fontSize};
+  color: ${props => props.color};
+  margin: ${props => props.margin};
+  font-weight: ${props => props.fontWeight};
+`;
+
+//컴포넌트
+export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background: linear-gradient(to right, #5f57ea 0%, #9647db 100%);
+`;
+export const Header = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 70px;
+  background: linear-gradient(to right, #686de0 0%, #9647db 100%);
 `;

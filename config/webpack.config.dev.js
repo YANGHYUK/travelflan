@@ -7,8 +7,12 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 //clean-webpack-plugin 빌드시마다 안쓰는 애들을 지워주기 위해
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
+//async-await쓰려면 아래 설정
+require("babel-polyfill");
+
 module.exports = {
-  entry: "./src/index.js",
+  entry: ["babel-polyfill", "./src/index.js"],
+  // entry: "./src/index.js",
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname + "/build"),

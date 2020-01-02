@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-
-import "./scss/style.scss";
 import { Link } from "react-router-dom";
 import { Container } from "./components/StyledComponents";
 
@@ -10,7 +8,7 @@ const Home = props => {
   useEffect(() => {
     let token = localStorage.getItem("token");
     doCheckToken();
-    token ? props.history.push("/") : props.history.push("/signin");
+    token ? props.history.push("/main") : props.history.push("/signin");
   }, []);
   return (
     <Container>
