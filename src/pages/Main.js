@@ -13,14 +13,18 @@ import {
 import { fetchAlbumData } from "../fetchCollection/index";
 
 import ListGrid from "../components/ListGrid";
+import StyledButton from "../components/Button";
 
 const ContentBox = styled.div`
   display: flex;
-  // min-height: 800px;
+  width:80%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   transition: width 0.8s ease-in;
   background-color: white;
   padding: 20px;
-  margin: 80px 10px 0 10px;
+  margin: 80px 50px 80px; 80px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.3);
   -webkit-box-shadow: 0 12px 25px rgba(0, 0, 0, 0.6);
@@ -137,7 +141,7 @@ const Main = props => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [loadData, setLoadData] = useState([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [myId, setMyId] = useState("");
 
   const onhandleLogout = () => {
@@ -145,13 +149,17 @@ const Main = props => {
     props.history.push("/signin");
   };
 
-  const onhandleListLoad = () => {};
+  const onhandleListLoad = () => {
+    setLoadData(loadData.concat(data.slice(page * 5, (page + 1) * 5)));
+    setPage(page + 1);
+  };
 
   const loadFetchData = async () => {
     let wholeData = await fetchAlbumData();
     if (wholeData) {
       setData(wholeData);
-      setLoadData(wholeData.slice(page - 1, page * 10));
+      setLoadData(wholeData.slice(page, (page + 1) * 5));
+      setPage(page + 1);
       setLoading(false);
     }
   };
@@ -188,9 +196,29 @@ const Main = props => {
           </Header>
         </Column>
         <Column xs="12">
-          <ContentBox style={{ width: "70%" }}>
-            {loading ? <div>loading...</div> : <div>hi</div>}
+          <ContentBox>
+            {loading ? (
+              <div>loading...</div>
+            ) : (
+              <>
+                <ListGrid data={loadData}>hi</ListGrid>
+                <div style={{ maxWidth: "500px" }}>
+                  <StyledButton
+                    onClick={onhandleListLoad}
+                    name="more"
+                    active={true}
+                  >
+                    load more
+                  </StyledButton>
+                </div>
+              </>
+            )}
           </ContentBox>
+          {/* <TopButton
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            top
+          </TopButton> */}
         </Column>
       </Row>
     </Container>

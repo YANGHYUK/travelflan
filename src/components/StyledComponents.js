@@ -46,7 +46,9 @@ export const Text = styled.span`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  // justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   width: 100%;
   background: linear-gradient(to right, #5f57ea 0%, #9647db 100%);
 `;
