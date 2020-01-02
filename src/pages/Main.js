@@ -244,9 +244,9 @@ const Main = props => {
                   <StyledButton
                     onClick={onhandleListLoad}
                     name="more"
-                    active={true}
+                    active={data.length > loadData.length ? true : false}
                   >
-                    load more
+                    more
                   </StyledButton>
                 </div>
               </>

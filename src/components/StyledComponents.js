@@ -46,7 +46,6 @@ export const Text = styled.span`
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
   min-height: 100vh;
   width: 100%;
@@ -63,4 +62,10 @@ export const Header = styled.div`
   width: 100%;
   height: 70px;
   background: linear-gradient(to right, #686de0 0%, #9647db 100%);
+  -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.6);
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding-box;
+  background-clip: padding-box;
 `;
