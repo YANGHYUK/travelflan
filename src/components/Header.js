@@ -125,7 +125,12 @@ const Image = styled.div`
   margin-bottom: 2px;
 `;
 
-export default function Header({ myId, onhandleLogout }) {
+const onhandleLogout = () => {
+  localStorage.removeItem("token");
+  props.history.push("/signin");
+};
+
+export default function Header({ myId }) {
   return (
     <Row>
       <Column xs="12">

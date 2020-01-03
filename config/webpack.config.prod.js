@@ -2,21 +2,17 @@ const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+require("@babel/polyfill");
 
 module.exports = {
-  entry: "./src/index.js",
-  output: {
-    filename: "bundle.[contenthash].js",
-    path: path.resolve(__dirname, "../build")
-  },
   mode: "production",
+  entry: ["@babel/polyfill", "./src/index.js"],
+  output: {
+    path: path.resolve(__dirname, "../build"),
+    filename: "bundle.[contenthash].js"
+  },
   module: {
     rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: "/node_modules",
-        use: ["babel-loader"]
-      },
       {
         test: /\.html$/,
         use: [
@@ -25,6 +21,11 @@ module.exports = {
             options: { minimize: true }
           }
         ]
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: "/node_modules",
+        use: ["babel-loader"]
       },
       {
         test: /\.css$/,

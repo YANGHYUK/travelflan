@@ -16,7 +16,6 @@ import StyledTopButton from "../components/TopButton";
 import InputModal from "../components/InputModal";
 
 import { fetchAlbumData } from "../fetchCollection/index";
-import { ContextReplacementPlugin } from "webpack";
 
 const ContentBox = styled.div`
   display: flex;
@@ -46,12 +45,12 @@ const Main = props => {
   const [page, setPage] = useState(0);
   const [myId, setMyId] = useState("");
 
-  // const [formData, setFormData] = useState({
-  //   userId: myId,
-  //   id: data.length,
-  //   title: "",
-  //   image: null
-  // });
+  const [formData, setFormData] = useState({
+    userId: myId,
+    id: data.length,
+    title: "",
+    image: null
+  });
 
   const onhandleChange = e => {
     let value = e.target.value;
@@ -74,25 +73,9 @@ const Main = props => {
     // setLoadData(renewLoadData);
   };
 
-  const onhandleLogout = () => {
-    localStorage.removeItem("token");
-    props.history.push("/signin");
-  };
-
   const onhandleListLoad = () => {
     setLoadData(loadData.concat(data.slice(page * 5, (page + 1) * 5)));
     setPage(page + 1);
-  };
-
-  const loadFetchData = async () => {
-    let wholeData = await fetchAlbumData();
-    let latestOrderedData = wholeData.reverse();
-    if (wholeData) {
-      setData(latestOrderedData.reverse());
-      setLoadData(latestOrderedData.reverse().slice(page, (page + 1) * 5));
-      setPage(page + 1);
-      setLoading(false);
-    }
   };
 
   useEffect(() => {
@@ -101,6 +84,17 @@ const Main = props => {
       token ? setMyId(token.split("/")[0]) : props.history.push("/signin");
     };
     tokenCheck();
+
+    const loadFetchData = async () => {
+      let wholeData = await fetchAlbumData();
+      let latestOrderedData = wholeData.reverse();
+      if (wholeData) {
+        setData(latestOrderedData.reverse());
+        setLoadData(latestOrderedData.reverse().slice(page, (page + 1) * 5));
+        setPage(page + 1);
+        setLoading(false);
+      }
+    };
     loadFetchData();
   }, []);
 
@@ -108,7 +102,7 @@ const Main = props => {
 
   return (
     <Container>
-      <Header myId={myId} onhandleLogout={onhandleLogout} />
+      <Header myId={myId} />
       <Row>
         {modalOpen && (
           <InputModal

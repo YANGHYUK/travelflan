@@ -119,7 +119,7 @@ const Signup = props => {
   const { errors, email, password } = values;
 
   const onChange = e => {
-    event.preventDefault();
+    e.preventDefault();
     let { name, value } = e.target;
     const validEmailRegex = RegExp(
       /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i

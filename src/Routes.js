@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { createGlobalStyle } from "styled-components";
@@ -19,6 +19,10 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Routes = () => {
+  useEffect(() => {
+    localStorage.removeItem("token");
+  }, []);
+
   return (
     <>
       <Router history={createBrowserHistory} basename={"/"}>

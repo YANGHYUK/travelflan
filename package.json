@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --config ./config/webpack.config.dev --hot",
+    "start": "webpack-dev-server --config ./config/webpack.config.dev --max_old_space_size=4096 --hot",
     "build": "webpack --config ./config/webpack.config.prod",
     "jest": "jest",
     "test:unit": "mocha --require @babel/register --require ./test/helpers.js --require ./test/dom.js 'src/**/*.spec.js'",
@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.7.7",
+    "@babel/polyfill": "^7.7.0",
     "@babel/preset-env": "^7.7.7",
     "@babel/preset-react": "^7.7.4",
     "@babel/register": "^7.7.7",
@@ -41,6 +42,7 @@
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-hot-loader": "^4.12.18",
     "sass-loader": "^8.0.0",
     "style-loader": "^1.1.2",
     "webpack": "^4.41.5",
@@ -48,7 +50,6 @@
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.4.3",
     "fs": "^0.0.1-security",

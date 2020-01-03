@@ -8,24 +8,26 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 //async-await쓰려면 아래 설정
-require("babel-polyfill");
+require("@babel/polyfill");
+const port = process.env.PORT || 8080;
 
 module.exports = {
-  entry: ["babel-polyfill", "./src/index.js"],
-
+  mode: "development", //production or development를 설정해줘야 용도에 맞게 사용가능
+  entry: ["@babel/polyfill", "./src/index.js"],
   output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname + "/build")
-    // publicPath: "./src"
+    path: path.resolve(__dirname + "/build"),
+    filename: "bundle[hash].js"
+    // publicPath: "/"
   },
   devServer: {
     //webpack-dev-server 매번 수정할때마다 yarn build를 해주어야하는 번거로운 일을 해결하기 위해
     contentBase: path.resolve("./build"),
     index: "index.html",
-    port: 3000,
-    historyApiFallback: true
+    port: port,
+    open: true,
+    historyApiFallback: { index: "/" }
   },
-  mode: "development", //production or development를 설정해줘야 용도에 맞게 사용가능
+
   module: {
     rules: [
       {
@@ -52,15 +54,17 @@ module.exports = {
       }
     ]
   },
-  externals: ["fs"],
+  devtool: "inline-source-map",
   plugins: [
     new HtmlWebPackPlugin({
       template: "./public/index.html", //public하위 index.html을 템플릿으로 읽는다.
       filename: "index.html" //아웃풋으로 출력할 파일
+      // favicon: 'public/favicon.ico' //favicon아이콘이 있다면
     }),
     new MiniCssExtractPlugin({
       filename: "style.css"
     }),
     new CleanWebpackPlugin()
+    // new webpack.DefinePlugin({ "global.GENTLY": false })
   ]
 };
