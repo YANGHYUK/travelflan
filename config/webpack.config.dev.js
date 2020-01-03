@@ -25,7 +25,7 @@ module.exports = {
     index: "index.html",
     port: port,
     open: true,
-    historyApiFallback: { index: "/" }
+    historyApiFallback: true
   },
 
   module: {

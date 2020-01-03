@@ -16,11 +16,11 @@ const StyledButton = styled.button`
   text-align: center;
   color: white;
   text-decoration: none;
-  background-color: ${props => (props.active ? "#184954" : "#cdcfd4 ")}
+  background-color: ${props => (props.active ? "#247082" : "#cdcfd4 ")}
   cursor: ${props => (props.active ? "pointer" : null)}
   border: ${props => (props.active ? "solid 1px #247082" : null)}
   &:hover {
-    background-color:#247082;
+    background-color:#184954;
     border: none;
   }
   margin-top:10px;

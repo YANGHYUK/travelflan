@@ -42,7 +42,7 @@ const ModalContent = styled.div`
     button {
       width: 100%;
       padding: 12px 0;
-      border-radius: 0 0 10px 10px;
+      // border-radius: 0 0 10px 10px;
       background-color: #ad7cef;
       font-size: 13pt;
       color: white;
@@ -54,6 +54,8 @@ const ModalContent = styled.div`
       &:active {
         background-color: #7e49c8;
       }
+      appearance: none;
+      outline-style: none;
     }
   }
 `;
@@ -72,14 +74,14 @@ const Image = styled.div`
   margin-bottom: 10px;
 `;
 
-const InputModal = ({ setModalOpen, userId, title, onChagne, onSubmit }) => {
+const InputModal = ({ setModalOpen, userId, title, onChange, onSubmit }) => {
   return (
     <React.Fragment>
       <ModalContent>
         <p className="title">TravelStory 작성하기</p>
         <div className="content">
           <Input value={`user : ${userId}`} />
-          <Input value={title} placeholder="title" onChagne={onChagne} />
+          <Input value={title} placeholder="title" onChange={onChange} />
           <div
             style={{
               display: "flex",
@@ -92,10 +94,10 @@ const InputModal = ({ setModalOpen, userId, title, onChagne, onSubmit }) => {
             <Image url="https://via.placeholder.com/150" />
           </div>
         </div>
-        {/* <div className="button-wrap">
+        <div className="button-wrap">
           <button onClick={() => setModalOpen(false)}> Cancel </button>
           <button onClick={onSubmit}> Enroll </button>
-        </div> */}
+        </div>
       </ModalContent>
     </React.Fragment>
   );

@@ -69,8 +69,10 @@ const Main = props => {
     let newDataSet = formData;
     let renewLoadData = loadData;
     renewLoadData.unshift(newDataSet);
-    console.log({ renewLoadData });
-    // setLoadData(renewLoadData);
+    if (renewLoadData) {
+      setModalOpen(false);
+      setLoadData(renewLoadData);
+    }
   };
 
   const onhandleListLoad = () => {
@@ -109,7 +111,6 @@ const Main = props => {
             setModalOpen={setModalOpen}
             userId={myId}
             title={title}
-            onhandleEnroll
             onChange={onhandleChange}
             onSubmit={onhandleSubmit}
           />
@@ -120,7 +121,7 @@ const Main = props => {
               <div>loading...</div>
             ) : (
               <>
-                <ListGrid data={loadData} />
+                <ListGrid data={loadData} myId={myId} />
                 <div
                   style={{
                     display: "flex",

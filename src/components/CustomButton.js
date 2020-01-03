@@ -20,9 +20,9 @@ const StyledButton = styled.button`
     props.backgroundColor ? props.backgroundColor : "#dfe6e9"}
   cursor:pointer;
   &:hover {
-    background-color:white;
+    background-color:black;
     border: solid 1px #cdcfd4;
-    color:#34495e;
+    color:white;
   }
   margin-top:10px;
   margin-bottom: 10px;

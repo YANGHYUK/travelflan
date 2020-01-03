@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { Row, Column, MarginDiv, Text } from "./ResponsiveComponents";
 
@@ -57,36 +57,40 @@ const UserImage = styled.div`
   height: 20px;
   justify-content: center;
   align-items: center;
-  margin-right: 20px;
-  margin-bottom: 10px;
+  margin-right: 5px;
+  margin-top: 10px;
 `;
 
 const ImageBox = styled.div`
   display: flex;
   flex-direction: row;
+  // justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100%;
 `;
 
-const showDataList = data => {
+const showDataList = (data, myId) => {
   return data.map((ele, idx) => {
     let userId = ele.userId;
     let id = ele.id;
     let title = ele.title;
+
     return (
       <Column xs="6" sm="6" md="4" lg="2.4" key={idx}>
         <ListCard>
           <ContentBox>
             <ImageBox>
-              <UserImage url="https://www.logolynx.com/images/logolynx/s_cb/cbd29542455b9e0cc175289ff24cecaa.jpeg" />
-              <Text>user:{userId}</Text>
+              <div>
+                <UserImage url="https://www.logolynx.com/images/logolynx/s_cb/cbd29542455b9e0cc175289ff24cecaa.jpeg" />
+                <Text fontSize="8px">{id}</Text>
+              </div>
+              <Text fontSize="12px">{userId}</Text>
             </ImageBox>
             <div>
               <Text fontSize="20px">{title}</Text>
             </div>
-
-            {/* <div>id:{id}</div> */}
+            {myId === userId ? <button>삭제</button> : null}
           </ContentBox>
           <Image />
         </ListCard>
@@ -95,11 +99,11 @@ const showDataList = data => {
   });
 };
 
-export default function ListGrid({ data }) {
+export default function ListGrid({ data, myId }) {
   let propsData = data || [];
   return (
     <ListContainer>
-      <Row>{showDataList(propsData)}</Row>
+      <Row>{showDataList(propsData, myId)}</Row>
     </ListContainer>
   );
 }
