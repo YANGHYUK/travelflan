@@ -36,11 +36,12 @@ const DropDown = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  height: 100%;
   min-width: 130px;
+  min-height: 130px;
+  height: 100%;
   position: absolute;
   z-index: 100;
-  margin-top: 80px;
+  margin-top: 110px;
   margin-right: 30px;
   background-color: white;
   border-radius: 5px;
@@ -130,7 +131,14 @@ const onhandleLogout = history => {
   history.push("/signin");
 };
 
-export default function Header({ myId, history }) {
+export default function Header({ myId, history, setCurrentPostTarget }) {
+  const onhandleClickMyPostButton = () => {
+    setCurrentPostTarget("mine");
+  };
+
+  const onhandleClickWholePostButton = () => {
+    setCurrentPostTarget("all");
+  };
   return (
     <Row>
       <Column xs="12">
@@ -153,6 +161,18 @@ export default function Header({ myId, history }) {
                     LogOut
                   </ProfileText>
                 </IdBox_Content>
+                {/* <IdBox_Content active={true}>
+                  <Image />
+                  <ProfileText onClick={() => onhandleClickMyPostButton()}>
+                    MyPost
+                  </ProfileText>
+                </IdBox_Content>
+                <IdBox_Content active={true}>
+                  <Image />
+                  <ProfileText onClick={() => onhandleClickWholePostButton()}>
+                    WholePost
+                  </ProfileText>
+                </IdBox_Content> */}
               </DropDown>
             </MyProfile>
           </AccountBox>

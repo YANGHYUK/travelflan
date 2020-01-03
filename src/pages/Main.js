@@ -51,9 +51,14 @@ const Main = props => {
   //내 아이디
   const [myId, setMyId] = useState("");
 
-  //updateFlag
-  //글 작성 수정 value
+  //글update 수정 value
   const [updateInputValue, setUpdateInputValue] = useState({});
+
+  //내 post만 모아놓는 데이터
+  const [myPostData, setMyPostData] = useState([]);
+
+  //전체 post가 노출될 것인지 내 post가 노출될 것인지 확인 위한 flag
+  const [currentPostTarget, setCurrentPostTarget] = useState("all");
 
   const [formData, setFormData] = useState({
     userId: myId,
@@ -130,14 +135,17 @@ const Main = props => {
     let newDataSet = formData;
     let wholeData = data;
     let renewLoadData = loadData;
+    let myLoadData = myPostData;
 
     renewLoadData.unshift(newDataSet);
     wholeData.unshift(newDataSet);
+    myLoadData.unshift(newDataSet);
 
     if (renewLoadData) {
       setModalOpen(false);
       setLoadData(renewLoadData);
       setData(wholeData);
+      setMyPostData(myLoadData);
     }
     setFormData({
       ...formData,
@@ -149,8 +157,17 @@ const Main = props => {
 
   //목록 더 불러오기
   const onhandleListLoad = () => {
-    setLoadData(loadData.concat(data.slice(page * 5, (page + 1) * 5)));
-    setPage(page + 1);
+    console.log(page * 5 + Math.abs(5 - (loadData.length % 5)));
+    if (loadData.length % 5 !== 0) {
+      setLoadData(
+        loadData.concat(
+          data.slice(page * 5, page * 5 + Math.abs(5 - (loadData.length % 5)))
+        )
+      );
+      setPage(page + 1);
+    } else {
+      setLoadData(loadData.concat(data.slice(page * 5, (page + 1) * 5)));
+    }
   };
 
   useEffect(() => {
@@ -180,7 +197,12 @@ const Main = props => {
 
   return (
     <Container>
-      <Header id="header" myId={myId} history={props.history} />
+      <Header
+        id="header"
+        myId={myId}
+        history={props.history}
+        setCurrentPostTarget={setCurrentPostTarget}
+      />
       <Row>
         {modalOpen && (
           <InputModal
@@ -200,7 +222,7 @@ const Main = props => {
               <>
                 <ListGrid
                   id="listgrid"
-                  data={loadData}
+                  data={currentPostTarget === "all" ? loadData : myPostData}
                   myId={myId}
                   onhandleUpdate={onhandleUpdate}
                   onhandleDelete={onhandleDelete}
@@ -235,6 +257,21 @@ const Main = props => {
               </>
             )}
           </ContentBox>
+          {/* <div
+            style={{
+              position: "fixed",
+              top: 10,
+              right: 330
+            }}
+          >
+
+            <CustomButton
+              name="my post"
+              width="100px"
+              height="30px"
+              onClick={setModalOpen}
+            />
+          </div> */}
           <div
             style={{
               position: "fixed",
@@ -242,10 +279,10 @@ const Main = props => {
               right: 170
             }}
           >
-            {/* 글작성 추가 버튼 */}
+            {/* new post 버튼 */}
             <CustomButton
               name="new post"
-              width="50px"
+              width="100px"
               height="30px"
               onClick={setModalOpen}
             />

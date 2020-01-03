@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-  min-width: ${props => (props.width ? props.width : "150px")};
-  height:${props => (props.height ? props.height : "36px")};
+  width: ${props => (props.width ? props.width : "135px")};
+  height:${props => (props.height ? props.height : "35px")};
 
   border-radius:10px;
   font-family: NotoSansKR;

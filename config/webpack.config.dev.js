@@ -65,6 +65,5 @@ module.exports = {
       filename: "style.css"
     }),
     new CleanWebpackPlugin()
-    // new webpack.DefinePlugin({ "global.GENTLY": false })
   ]
 };
