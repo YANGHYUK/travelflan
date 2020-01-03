@@ -1,12 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import {
-  Row,
-  Column,
-  MarginDiv,
-  Text,
-  Container
-} from "../components/ResponsiveComponents";
+import { Row, Column, Container } from "../components/ResponsiveComponents";
 import Header from "../components/Header";
 
 import ListGrid from "../components/ListGrid";
@@ -16,8 +10,6 @@ import StyledTopButton from "../components/TopButton";
 import InputModal from "../components/InputModal";
 
 import { fetchAlbumData } from "../fetchCollection/index";
-
-const ID_NUMBER = 101;
 
 const ContentBox = styled.div`
   display: flex;
@@ -39,6 +31,8 @@ const ContentBox = styled.div`
   background-clip: padding-box;
 `;
 
+const ID_NUMBER = 101;
+
 const Main = props => {
   const [loading, setLoading] = useState(true);
 
@@ -57,6 +51,10 @@ const Main = props => {
   //내 아이디
   const [myId, setMyId] = useState("");
 
+  //updateFlag
+  //글 작성 수정 value
+  const [updateInputValue, setUpdateInputValue] = useState({});
+
   const [formData, setFormData] = useState({
     userId: myId,
     id: ID_NUMBER,
@@ -64,20 +62,50 @@ const Main = props => {
     image: null
   });
 
-  //글 수정
+  const onhandleCloseModal = boolean => {
+    setModalOpen(boolean);
+    setFormData({
+      ...formData,
+      userId: myId,
+      title: "",
+      image: null
+    });
+  };
+
+  //글 수정 힘수
   const onhandleUpdate = targetId => {
-    console.log({ targetId });
+    let updateTargetId = targetId;
+    if (updateInputValue) {
+      let updateWholeData = data.map(ele => {
+        if (ele.id === updateTargetId) {
+          ele.title = updateInputValue;
+          return ele;
+        } else {
+          return ele;
+        }
+      });
+      let updateLoadData = loadData.map(ele => {
+        if (ele.id === updateTargetId) {
+          ele.title = updateInputValue;
+          return ele;
+        } else {
+          return ele;
+        }
+      });
+      setData(updateWholeData);
+      setLoadData(updateLoadData);
+      setUpdateInputValue("");
+    }
   };
 
   //글 삭제
   const onhandleDelete = targetId => {
-    let deleteTargetIndex = targetId;
+    let deleteTargetId = targetId;
     let dataAfterDeleted = data.filter(ele => {
-      return ele.id !== deleteTargetIndex ? ele : false;
+      return ele.id !== deleteTargetId ? ele : false;
     });
-
     let loadDataAfterDeleted = loadData.filter(ele => {
-      return ele.id !== deleteTargetIndex;
+      return ele.id !== deleteTargetId;
     });
     setData(dataAfterDeleted);
     setLoadData(loadDataAfterDeleted);
@@ -128,8 +156,7 @@ const Main = props => {
   useEffect(() => {
     const tokenCheck = () => {
       let token = localStorage.getItem("token");
-      token ? setMyId(token.split("/")[0]) : null;
-      // props.history.push("/signin");
+      token ? setMyId(token.split("/")[0]) : props.history.push("/signin");
     };
     tokenCheck();
 
@@ -154,7 +181,7 @@ const Main = props => {
       <Row>
         {modalOpen && (
           <InputModal
-            setModalOpen={setModalOpen}
+            onhandleCloseModal={onhandleCloseModal}
             userId={myId}
             title={title}
             onChange={onhandleChange}
@@ -172,6 +199,7 @@ const Main = props => {
                   myId={myId}
                   onhandleUpdate={onhandleUpdate}
                   onhandleDelete={onhandleDelete}
+                  setUpdateInputValue={setUpdateInputValue}
                 />
                 <div
                   style={{

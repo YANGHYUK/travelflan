@@ -5,7 +5,8 @@ import {
   Container,
   Row,
   Column,
-  MarginDiv
+  MarginDiv,
+  Text
 } from "../components/ResponsiveComponents";
 
 import Input from "../components/Input";
@@ -157,6 +158,11 @@ const Signup = props => {
     <Container>
       <Row>
         <Column xs="12" sm="12" md="12">
+          <div style={{ margin: "20px" }}>
+            <Text fontSize="1.5rem" color="white" fontWeight="bold">
+              Travelstagram
+            </Text>
+          </div>
           <SignContainer>
             {loading ? <ProgressBar /> : <MarginDiv margin="20px 0 20px 0" />}
             <SignupBox>

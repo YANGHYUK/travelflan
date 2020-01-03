@@ -74,13 +74,19 @@ const Image = styled.div`
   margin-bottom: 10px;
 `;
 
-const InputModal = ({ setModalOpen, userId, title, onChange, onSubmit }) => {
+const InputModal = ({
+  onhandleCloseModal,
+  userId,
+  title,
+  onChange,
+  onSubmit
+}) => {
   return (
     <React.Fragment>
       <ModalContent>
         <p className="title">TravelStory 작성하기</p>
         <div className="content">
-          <Input value={`user : ${userId}`} />
+          <Input readOnly value={`user : ${userId}`} onChange={() => null} />
           <Input value={title} placeholder="title" onChange={onChange} />
           <div
             style={{
@@ -95,7 +101,7 @@ const InputModal = ({ setModalOpen, userId, title, onChange, onSubmit }) => {
           </div>
         </div>
         <div className="button-wrap">
-          <button onClick={() => setModalOpen(false)}> Cancel </button>
+          <button onClick={() => onhandleCloseModal(false)}> Cancel </button>
           <button onClick={onSubmit}> Enroll </button>
         </div>
       </ModalContent>

@@ -22,12 +22,6 @@ describe("<Signin />", () => {
     expect(wrapper.find("#password").length).toEqual(1);
   });
 
-  // it("비밀번호 인풋이 변경되어야 합니다.", () => {
-  //   const wrapper = shallow(<Signin />);
-  //   wrapper.find("#password").simulate("change", { target: { value: "값" } });
-  //   expect(wrapper.state().password).toBe("값");
-  // });
-
   it("로그인 버튼이 렌더링되어야 합니다.", () => {
     const wrapper = shallow(<Signin />);
     expect(wrapper.find("#login_button").length).toEqual(1);
@@ -37,11 +31,4 @@ describe("<Signin />", () => {
     const wrapper = shallow(<Signin />);
     expect(wrapper.find("#signup_link").length).toEqual(1);
   });
-
-  // it("숫자가 올라가야 합니다.", () => {
-  //   const wrapper = shallow(<Counter />);
-  //   wrapper.find("#up").simulate("click");
-  //   wrapper.find("#up").simulate("click");
-  //   expect(wrapper.state().value).toBeLessThan(1);
-  // });
 });

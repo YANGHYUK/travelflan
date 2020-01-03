@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { Row, Column, MarginDiv, Text } from "./ResponsiveComponents";
+
 import DeleteModal from "./DeleteModal";
 const ListContainer = styled.div`
   display: flex;
@@ -70,12 +71,91 @@ const ImageBox = styled.div`
   height: 100%;
 `;
 
-const showDataList = (data, myId, onhandleUpdate, onhandleDelete) => {
+const UpdateInpuField = styled.input`
+  min-width: 100px;
+  width: 90%; /* 원하는 너비 설정 */
+  height: auto; /* 높이값 초기화 */
+  line-height: 15px; /* line-height 초기화 */
+  padding: 0.3em 0.6em; /* 원하는 여백 설정, 상하단 여백으로 높이를 조절 */
+  font-family: inherit; /* 폰트 상속 */
+  font-size: 12px;
+  border: 1px solid #999;
+  border-radius: 8px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline-style: none;
+  margin-top: 5px;
+  margin-bottom: 5px;
+`;
+
+const UpdateButtonField = styled.button`
+min-width: ${props => (props.width ? props.width : "40px")};
+height:${props => (props.height ? props.height : "18px")};
+padding:1px;
+border-radius:3px;
+font-family: NotoSansKR;
+font-size: 8px;
+font-weight: 500;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.47;
+letter-spacing: -0.75px;
+text-align: center;
+color: black;
+text-decoration: none;
+background-color: ${props =>
+  props.backgroundColor ? props.backgroundColor : "white"}
+cursor:pointer;
+&:hover {
+  background-color:#ecf0f1;
+  border: solid 1px #cdcfd4;
+  color:#black;
+}
+margin-top:10px;
+margin-bottom: 10px;
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+outline-style: none;
+margin-left:2px;
+`;
+
+const showDataList = (
+  data,
+  myId,
+  onhandleUpdate,
+  onhandleDelete,
+  setUpdateInputValue
+) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [updateFlag, setUpdateFlag] = useState(false);
+
   const [targetId, setTargetId] = useState(null);
+
+  // 업데이트 수정 input value 전달함수
+  const onhandleChangeUpdateValue = e => {
+    let value = e.target.value;
+    if (value) {
+      setUpdateInputValue(value);
+    }
+  };
+
+  //삭제버튼 클릭
   const onhandleClickDeleteButton = id => {
     setModalOpen(true);
     setTargetId(id);
+  };
+
+  //수정 버튼 클릭
+  const onhandleClickUpdateButton = id => {
+    setUpdateFlag(true);
+  };
+
+  //업데이트 완료버튼 클릭
+  const onhandleClickUpdateCompleteButton = id => {
+    onhandleUpdate(id);
+    setUpdateFlag(false);
   };
 
   return data.map((ele, idx) => {
@@ -99,16 +179,44 @@ const showDataList = (data, myId, onhandleUpdate, onhandleDelete) => {
               <Text fontSize="12px">{ele.userId}</Text>
             </ImageBox>
             <div>
-              <Text fontSize="20px">{ele.title}</Text>
+              {myId === ele.userId && updateFlag ? (
+                <UpdateInpuField
+                  defaultValue={ele.title}
+                  onChange={e => onhandleChangeUpdateValue(e)}
+                />
+              ) : (
+                <Text fontSize="20px">{ele.title}</Text>
+              )}
             </div>
             {myId === ele.userId ? (
               <div
-                style={{ display: "flex", flexDirection: "row", width: "100%" }}
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                  width: "100%"
+                }}
               >
-                <button onClick={() => onhandleUpdate(ele.id)}>수정</button>
-                <button onClick={() => onhandleClickDeleteButton(ele.id)}>
-                  삭제
-                </button>
+                {updateFlag ? (
+                  <UpdateButtonField
+                    onClick={() => onhandleClickUpdateCompleteButton(ele.id)}
+                  >
+                    완료
+                  </UpdateButtonField>
+                ) : (
+                  <>
+                    <UpdateButtonField
+                      onClick={() => onhandleClickUpdateButton()}
+                    >
+                      수정
+                    </UpdateButtonField>
+                    <UpdateButtonField
+                      onClick={() => onhandleClickDeleteButton(ele.id)}
+                    >
+                      삭제
+                    </UpdateButtonField>
+                  </>
+                )}
               </div>
             ) : null}
           </ContentBox>
@@ -123,12 +231,20 @@ export default function ListGrid({
   data,
   myId,
   onhandleUpdate,
-  onhandleDelete
+  onhandleDelete,
+  setUpdateInputValue
 }) {
-  console.log({ data });
   return (
     <ListContainer>
-      <Row>{showDataList(data, myId, onhandleUpdate, onhandleDelete)}</Row>
+      <Row>
+        {showDataList(
+          data,
+          myId,
+          onhandleUpdate,
+          onhandleDelete,
+          setUpdateInputValue
+        )}
+      </Row>
     </ListContainer>
   );
 }
