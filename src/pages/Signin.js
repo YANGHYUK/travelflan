@@ -163,7 +163,7 @@ const Signin = props => {
         }
       });
 
-      //1번 로컬스토리지에 토큰 없다면 DB에 저장되어있다고 치는 하드코딩된 context api 값 확인
+      //2번 로컬스토리지에 토큰 없다면 DB에 저장되어있다고 치는 하드코딩된 context api 값 확인
       if (token) {
         let savedUserInfo = token.split("/").join("");
         if (savedUserInfo === email + password) {
