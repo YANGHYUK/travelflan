@@ -125,12 +125,12 @@ const Image = styled.div`
   margin-bottom: 2px;
 `;
 
-const onhandleLogout = () => {
+const onhandleLogout = history => {
   localStorage.removeItem("token");
-  props.history.push("/signin");
+  history.push("/signin");
 };
 
-export default function Header({ myId }) {
+export default function Header({ myId, history }) {
   return (
     <Row>
       <Column xs="12">
@@ -149,7 +149,9 @@ export default function Header({ myId }) {
                 </IdBox>
                 <IdBox_Content active={true}>
                   <Image />
-                  <ProfileText onClick={onhandleLogout}>LogOut</ProfileText>
+                  <ProfileText onClick={() => onhandleLogout(history)}>
+                    LogOut
+                  </ProfileText>
                 </IdBox_Content>
               </DropDown>
             </MyProfile>

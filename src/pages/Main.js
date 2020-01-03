@@ -177,7 +177,7 @@ const Main = props => {
 
   return (
     <Container>
-      <Header myId={myId} />
+      <Header myId={myId} history={props.history} />
       <Row>
         {modalOpen && (
           <InputModal
