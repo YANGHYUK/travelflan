@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
 import { Row, Column, Container } from "../components/ResponsiveComponents";
 import Header from "../components/Header";
@@ -75,7 +75,7 @@ const Main = props => {
   //글 수정 힘수
   const onhandleUpdate = targetId => {
     let updateTargetId = targetId;
-    if (updateInputValue) {
+    if (updateTargetId && updateInputValue) {
       let updateWholeData = data.map(ele => {
         if (ele.id === updateTargetId) {
           ele.title = updateInputValue;
@@ -171,16 +171,20 @@ const Main = props => {
       }
     };
     loadFetchData();
+    return function() {
+      console.log("clean-up");
+    };
   }, []);
 
   const { title } = formData;
 
   return (
     <Container>
-      <Header myId={myId} history={props.history} />
+      <Header id="header" myId={myId} history={props.history} />
       <Row>
         {modalOpen && (
           <InputModal
+            id="inputmodal"
             onhandleCloseModal={onhandleCloseModal}
             userId={myId}
             title={title}
@@ -195,13 +199,14 @@ const Main = props => {
             ) : (
               <>
                 <ListGrid
+                  id="listgrid"
                   data={loadData}
                   myId={myId}
                   onhandleUpdate={onhandleUpdate}
                   onhandleDelete={onhandleDelete}
                   setUpdateInputValue={setUpdateInputValue}
                 />
-                <div
+                {/* <div
                   style={{
                     display: "flex",
                     flexDirection: "row",
@@ -210,15 +215,18 @@ const Main = props => {
                     paddingRight: "5%"
                   }}
                 >
+
                   <CustomButton
                     name="write +"
                     width="50px"
                     height="30px"
                     onClick={setModalOpen}
                   />
-                </div>
+                </div> */}
                 <div style={{ maxWidth: "500px" }}>
+                  {/* 리스트 추가버튼 */}
                   <StyledButton
+                    id="add_listbutton"
                     onClick={onhandleListLoad}
                     name="more"
                     active={data.length > loadData.length ? true : false}
@@ -227,6 +235,21 @@ const Main = props => {
               </>
             )}
           </ContentBox>
+          <div
+            style={{
+              position: "fixed",
+              top: 10,
+              right: 170
+            }}
+          >
+            {/* 글작성 추가 버튼 */}
+            <CustomButton
+              name="new post"
+              width="50px"
+              height="30px"
+              onClick={setModalOpen}
+            />
+          </div>
           <StyledTopButton
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >

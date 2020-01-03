@@ -35,12 +35,12 @@ export const MarginDiv = styled.div`
   margin: ${props => props.margin};
 `;
 
-export const Text = styled.span`
+export const Text = styled.div`
   font-size: ${props => props.fontSize};
   color: ${props => props.color};
   margin: ${props => props.margin};
   font-weight: ${props => props.fontWeight};
-  word-break: keep-all;
+  word-break: break-all;
 `;
 
 //컴포넌트

@@ -5,7 +5,7 @@ const StyledFiller = styled.div`
   background: #1da598;
   height: 100%;
   border-radius: inherit;
-  transition: width 0.5s ease-in;
+  transition: width 0.3s ease-in;
 `;
 
 const Filler = ({ percentage }) => {
@@ -27,6 +27,9 @@ export default function ProgressBar() {
 
   useEffect(() => {
     setPercentage(100);
+    return function() {
+      console.log("clean-up");
+    };
   });
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -30,7 +30,7 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledTd = styled.p`
-  min-width: 120px;
+  min-width: 80px;
   text-align: center;
   vertical-align: middle;
   color: #bdc3c7;
@@ -267,9 +267,19 @@ const Signin = props => {
                         display: "flex",
                         width: "100%",
                         flexDirection: "row",
-                        justifyContent: "flex-end"
+                        justifyContent: "flex-end",
+                        alignItems: "cetner"
                       }}
                     >
+                      <div
+                        style={{
+                          fontSize: "13px",
+                          color: "#ecf0f1",
+                          marginTop: "17px"
+                        }}
+                      >
+                        아이디가 없다면 ➜
+                      </div>
                       <StyledLink to="/signup" id="signup_link">
                         <StyledTd>SIGN UP</StyledTd>
                       </StyledLink>

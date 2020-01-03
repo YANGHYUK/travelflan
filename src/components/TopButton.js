@@ -21,11 +21,12 @@ const TopButton = styled.button`
   border-radius: 25px;
   border: solid 1px #e84393;
   cursor: pointer;
-  background-color: #e84393;
-  color: #bdc3c7;
+  background-color: #fd79a8;
+
+  color: white;
 
   &:hover {
-    background-color: #fd79a8;
+    background-color: #e84393;
     border: solid 1px #fd79a8;
     color: #ecf0f1;
   }

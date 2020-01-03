@@ -21,6 +21,9 @@ const GlobalStyle = createGlobalStyle`
 const Routes = () => {
   useEffect(() => {
     localStorage.removeItem("token");
+    return function() {
+      console.log("clean-up");
+    };
   }, []);
 
   return (
