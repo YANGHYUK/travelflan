@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Row, Column, MarginDiv, Text } from "./ResponsiveComponents";
-
 import DeleteModal from "./DeleteModal";
+
+import Modal from "./Modal";
 const ListContainer = styled.div`
   display: flex;
   flex: 1;
@@ -31,13 +32,22 @@ const ListCard = styled.div`
 `;
 
 const Image = styled.div`
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   background-image: url(${props => props.url});
   width: ${props => props.width};
   height: ${props => props.height};
   border-radius: 10px;
+`;
+
+const ImageModifyBox = styled.div`
+  position: absolute;
+  cursor: pointer;
+  border-radius: 13px;
+  &:hover {
+    background-color: black;
+  }
 `;
 
 const ContentBox = styled.div`
@@ -163,7 +173,6 @@ const showDataList = (
   };
 
   return data.map((ele, idx) => {
-    console.log({ ele });
     //현재 변경되는 타겟 id에 대한 테스트
     if (myId === ele.userId && updateFlag) {
       // console.log("ele.id", ele.id);
@@ -245,6 +254,17 @@ const showDataList = (
               </div>
             ) : null}
           </ContentBox>
+          {myId === ele.userId && ele.id === targetId && updateFlag ? (
+            <ImageModifyBox
+              onClick={() => console.log("사진 업데이트 기능은 준비중..")}
+            >
+              <Image
+                url="https://icon2.cleanpng.com/20180407/pew/kisspng-video-cameras-logo-photography-clip-art-camera-5ac987b171c340.706058951523156913466.jpg"
+                width="26px"
+                height="26px"
+              />
+            </ImageModifyBox>
+          ) : null}
           <Image
             url={ele.image ? ele.image : "https://via.placeholder.com/150"}
             width="150px"

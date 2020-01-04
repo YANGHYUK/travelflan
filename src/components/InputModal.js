@@ -83,7 +83,6 @@ const InputModal = ({
   onChange,
   onSubmit
 }) => {
-  console.log({ image });
   return (
     <React.Fragment>
       <ModalContent>
@@ -106,8 +105,6 @@ const InputModal = ({
               label="Upload"
               accept="image/*"
               onChange={onChangeImage}
-              // buttonAfter={uploadFileButton}
-              // ref={ref => (this.fileUpload = ref)}
             />
           </div>
         </div>
