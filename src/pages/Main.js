@@ -166,6 +166,8 @@ const Main = props => {
       id: formData.id + 1,
       image: image
     });
+    //post 등록 시, 상단으로 이동
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   //post작성목록 더 불러오기
