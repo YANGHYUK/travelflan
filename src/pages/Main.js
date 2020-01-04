@@ -67,6 +67,9 @@ const Main = props => {
     image: null
   });
 
+  const { title, image } = formData;
+
+  //모달 여닫기
   const onhandleCloseModal = boolean => {
     setModalOpen(boolean);
     setFormData({
@@ -77,7 +80,7 @@ const Main = props => {
     });
   };
 
-  //글 수정 힘수
+  //post 수정 힘수
   const onhandleUpdate = targetId => {
     let updateTargetId = targetId;
     if (updateTargetId && updateInputValue) {
@@ -103,7 +106,7 @@ const Main = props => {
     }
   };
 
-  //글 삭제
+  //post 삭제
   const onhandleDelete = targetId => {
     let deleteTargetId = targetId;
     let dataAfterDeleted = data.filter(ele => {
@@ -117,7 +120,7 @@ const Main = props => {
     setPage(1);
   };
 
-  //글작성 입력
+  //post작성 글 및 이미지 입력
   const onhandleChange = e => {
     let value = e.target.value;
     if (value) {
@@ -129,8 +132,18 @@ const Main = props => {
       });
     }
   };
+  //post작성 이미지 입력
+  const onhandleChangeImage = e => {
+    let imageFile = URL.createObjectURL(e.target.files[0]);
+    if (imageFile) {
+      setFormData({
+        ...formData,
+        image: imageFile
+      });
+    }
+  };
 
-  //글작성 등록
+  //post작성 등록
   const onhandleSubmit = () => {
     let newDataSet = formData;
     let wholeData = data;
@@ -151,13 +164,13 @@ const Main = props => {
       ...formData,
       title: "",
       id: formData.id + 1,
-      image: null
+      image: image
     });
   };
 
-  //목록 더 불러오기
+  //post작성목록 더 불러오기
   const onhandleListLoad = () => {
-    console.log(page * 5 + Math.abs(5 - (loadData.length % 5)));
+    //로드 데이터 갯수가 5개 단위가 아닐시에는 새로 불러오는 데이터의 갯수에 대한 조정이 필요하다. 아래는 그 로직
     if (loadData.length % 5 !== 0) {
       setLoadData(
         loadData.concat(
@@ -193,8 +206,6 @@ const Main = props => {
     };
   }, []);
 
-  const { title } = formData;
-
   return (
     <Container>
       <Header
@@ -210,7 +221,9 @@ const Main = props => {
             onhandleCloseModal={onhandleCloseModal}
             userId={myId}
             title={title}
+            image={image}
             onChange={onhandleChange}
+            onChangeImage={onhandleChangeImage}
             onSubmit={onhandleSubmit}
           />
         )}
@@ -224,6 +237,7 @@ const Main = props => {
                   id="listgrid"
                   data={currentPostTarget === "all" ? loadData : myPostData}
                   myId={myId}
+                  image={image}
                   onhandleUpdate={onhandleUpdate}
                   onhandleDelete={onhandleDelete}
                   setUpdateInputValue={setUpdateInputValue}
@@ -284,7 +298,7 @@ const Main = props => {
               name="new post"
               width="100px"
               height="30px"
-              onClick={setModalOpen}
+              onClick={() => onhandleCloseModal(true)}
             />
           </div>
           <StyledTopButton

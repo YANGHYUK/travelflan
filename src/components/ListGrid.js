@@ -163,6 +163,7 @@ const showDataList = (
   };
 
   return data.map((ele, idx) => {
+    console.log({ ele });
     //현재 변경되는 타겟 id에 대한 테스트
     if (myId === ele.userId && updateFlag) {
       // console.log("ele.id", ele.id);
@@ -245,7 +246,7 @@ const showDataList = (
             ) : null}
           </ContentBox>
           <Image
-            url="https://via.placeholder.com/150"
+            url={ele.image ? ele.image : "https://via.placeholder.com/150"}
             width="150px"
             height="150px"
           />

@@ -78,9 +78,12 @@ const InputModal = ({
   onhandleCloseModal,
   userId,
   title,
+  image,
+  onChangeImage,
   onChange,
   onSubmit
 }) => {
+  console.log({ image });
   return (
     <React.Fragment>
       <ModalContent>
@@ -91,13 +94,21 @@ const InputModal = ({
           <div
             style={{
               display: "flex",
-              flexDirection: "row",
+              flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
               marginTop: "10px"
             }}
           >
-            <Image url="https://via.placeholder.com/150" />
+            <Image url={image ? image : "https://via.placeholder.com/150"} />
+            <Input
+              type="file"
+              label="Upload"
+              accept="image/*"
+              onChange={onChangeImage}
+              // buttonAfter={uploadFileButton}
+              // ref={ref => (this.fileUpload = ref)}
+            />
           </div>
         </div>
         <div className="button-wrap">

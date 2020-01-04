@@ -78,7 +78,7 @@ const MyProfile = styled.div`
     -moz-background-clip: padding-box;
     background-clip: padding-box;
     > ${DropDown} {
-      display: flex;
+      display: block;
     }
   }
 `;
@@ -98,6 +98,9 @@ const ProfileText = styled.span`
   padding-top: 3px;
   padding-bottom: 3px;
   width: 100%;
+  &:hover {
+    color: ${props => (props.active ? "white" : "#bdc3c7")};
+  }
 `;
 
 const IdBox_Content = styled.div`
@@ -107,10 +110,7 @@ const IdBox_Content = styled.div`
   justify-content: space-around;
   align-items: center;
   &:hover {
-    background-color: #0666d6;
-    > ${ProfileText} {
-      color: white;
-    }
+    ${props => (props.active ? "background-color: #0666d6;" : null)}
   }
 `;
 
@@ -157,22 +157,31 @@ export default function Header({ myId, history, setCurrentPostTarget }) {
                 </IdBox>
                 <IdBox_Content active={true}>
                   <Image />
-                  <ProfileText onClick={() => onhandleLogout(history)}>
+                  <ProfileText
+                    active={true}
+                    onClick={() => onhandleLogout(history)}
+                  >
                     LogOut
                   </ProfileText>
                 </IdBox_Content>
-                {/* <IdBox_Content active={true}>
+                <IdBox_Content active={false}>
                   <Image />
-                  <ProfileText onClick={() => onhandleClickMyPostButton()}>
+                  <ProfileText
+                    active={false}
+                    // onClick={() => onhandleClickMyPostButton()}
+                  >
                     MyPost
                   </ProfileText>
                 </IdBox_Content>
-                <IdBox_Content active={true}>
+                <IdBox_Content active={false}>
                   <Image />
-                  <ProfileText onClick={() => onhandleClickWholePostButton()}>
+                  <ProfileText
+                    active={false}
+                    // onClick={() => onhandleClickWholePostButton()}
+                  >
                     WholePost
                   </ProfileText>
-                </IdBox_Content> */}
+                </IdBox_Content>
               </DropDown>
             </MyProfile>
           </AccountBox>
