@@ -145,10 +145,14 @@ const showDataList = (
   const [targetId, setTargetId] = useState(null);
 
   // 업데이트 수정 input value 전달함수
-  const onhandleChangeUpdateValue = e => {
+  const onhandleChangeUpdateValue = (e, defaultValue) => {
     let value = e.target.value;
     if (value) {
       setUpdateInputValue(value);
+    } else {
+      console.log("hi");
+      //변경사항없으면 그전 그대로의 title그대로 저장
+      setUpdateInputValue(defaultValue);
     }
   };
 
@@ -199,7 +203,7 @@ const showDataList = (
               {myId === ele.userId && ele.id === targetId && updateFlag ? (
                 <UpdateInpuField
                   defaultValue={ele.title}
-                  onChange={e => onhandleChangeUpdateValue(e)}
+                  onChange={e => onhandleChangeUpdateValue(e, ele.title)}
                 />
               ) : (
                 <Text fontSize="20px">{ele.title}</Text>
@@ -277,14 +281,9 @@ const showDataList = (
 };
 
 //props로 내려오는 데이터들만 관찰하기 위해 따로 ..
-export default React.memo(function ListGrid({
-  data,
-  myId,
-  onhandleUpdate,
-  onhandleDelete,
-  setUpdateInputValue
-}) // data, myId, onhandleUpdate, onhandleDelete, setUpdateInputValue
-{
+export default React.memo(function ListGrid(
+  { data, myId, onhandleUpdate, onhandleDelete, setUpdateInputValue } // data, myId, onhandleUpdate, onhandleDelete, setUpdateInputValue
+) {
   return (
     <ListContainer>
       <Row>

@@ -56,7 +56,7 @@ const Main = props => {
   const [myId, setMyId] = useState("");
 
   //글update 수정 value
-  const [updateInputValue, setUpdateInputValue] = useState({});
+  const [updateInputValue, setUpdateInputValue] = useState("");
 
   //내 post만 모아놓는 데이터
   const [myPostData, setMyPostData] = useState([]);
@@ -87,10 +87,14 @@ const Main = props => {
   //post 수정 힘수
   const onhandleUpdate = targetId => {
     let updateTargetId = targetId;
-    if (updateTargetId && updateInputValue) {
+    if (updateTargetId) {
+      console.log({ title });
+      console.log({ updateInputValue });
       let updateWholeData = data.map(ele => {
         if (ele.id === updateTargetId) {
-          ele.title = updateInputValue;
+          if (title.length === 0 && updateInputValue.length !== 0) {
+            ele.title = updateInputValue;
+          }
           return ele;
         } else {
           return ele;
@@ -98,7 +102,9 @@ const Main = props => {
       });
       let updateLoadData = loadData.map(ele => {
         if (ele.id === updateTargetId) {
-          ele.title = updateInputValue;
+          if (title.length === 0 && updateInputValue.length !== 0) {
+            ele.title = updateInputValue;
+          }
           return ele;
         } else {
           return ele;
@@ -128,15 +134,14 @@ const Main = props => {
   const onhandleChangeText = e => {
     let value = e.target.value;
     value = value.replace(/^\s+/, "");
-    if (value) {
-      setFormData({
-        ...formData,
-        userId: myId,
-        title: value,
-        image: null
-      });
-    }
+    setFormData({
+      ...formData,
+      userId: myId,
+      title: value,
+      image: null
+    });
   };
+
   //post작성 이미지 입력
   const onhandleChangeImage = e => {
     let imageFile = URL.createObjectURL(e.target.files[0]);
@@ -290,7 +295,6 @@ const Main = props => {
               right: 330
             }}
           >
-
             <CustomButton
               name="my post"
               width="100px"
