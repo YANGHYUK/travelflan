@@ -179,6 +179,14 @@ const Signin = props => {
     }, 600);
   };
 
+  const onhandleEnter = e => {
+    if (e.keyCode === 13) {
+      email.length && password.length && !errors.email && !errors.password
+        ? onSubmit()
+        : false;
+    }
+  };
+
   const resetForm = () => {
     setValues({
       errors: { email: "", password: "" },
@@ -238,6 +246,7 @@ const Signin = props => {
                       name="password"
                       value={password || ""}
                       onChange={onChange}
+                      onKeyPress={e => onhandleEnter(e)}
                       placeholder="password"
                     />
                     <ErrorMessage>{errors.password}</ErrorMessage>

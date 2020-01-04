@@ -143,7 +143,6 @@ const showDataList = (
 ) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [updateFlag, setUpdateFlag] = useState(false);
-
   const [targetId, setTargetId] = useState(null);
 
   // 업데이트 수정 input value 전달함수
@@ -276,6 +275,7 @@ const showDataList = (
   });
 };
 
+//props로 내려오는 데이터들만 관찰하기 위해 따로 ..
 export default function ListGrid({
   data,
   myId,

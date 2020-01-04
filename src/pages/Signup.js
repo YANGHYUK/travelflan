@@ -118,9 +118,15 @@ const Signup = props => {
   });
 
   const { errors, email, password } = values;
+  const onSubmit = () => {
+    setLoading(true);
+    setTimeout(() => {
+      localStorage.setItem("token", email + "/" + password);
+      props.history.push("/signin");
+    }, 600);
+  };
 
   const onChange = e => {
-    e.preventDefault();
     let { name, value } = e.target;
     const validEmailRegex = RegExp(
       /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -145,13 +151,12 @@ const Signup = props => {
       setValues(() => doOnChange(values, errors, name, value));
     }
   };
-
-  const onSubmit = () => {
-    setLoading(true);
-    setTimeout(() => {
-      localStorage.setItem("token", email + "/" + password);
-      props.history.push("/signin");
-    }, 600);
+  const onhandleEnter = e => {
+    if (e.key === "Enter") {
+      email.length && password.length && !errors.email && !errors.password
+        ? onSubmit()
+        : false;
+    }
   };
 
   return (
@@ -198,6 +203,7 @@ const Signup = props => {
                       name="password"
                       value={password || ""}
                       onChange={onChange}
+                      onKeyPress={onhandleEnter}
                       placeholder="password"
                     />
                     <ErrorMessage>{errors.password}</ErrorMessage>
