@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Row, Column, MarginDiv, Text } from "./ResponsiveComponents";
+import { Row, Column, Text } from "./ResponsiveComponents";
 import DeleteModal from "./DeleteModal";
 
-import Modal from "./Modal";
 const ListContainer = styled.div`
   display: flex;
   flex: 1;
@@ -206,6 +205,7 @@ const showDataList = (
                 <Text fontSize="20px">{ele.title}</Text>
               )}
             </div>
+            {/* 내 아이디와 작성글의 아이디가 일치하면 수정, 완료, 삭제 버튼이 본인다. */}
             {myId === ele.userId ? (
               <div
                 style={{
@@ -215,6 +215,7 @@ const showDataList = (
                   width: "100%"
                 }}
               >
+                {/* 수정할 post의 id와 내가 지정한 post의 id가 일치하고 수정 버튼이 활성화 되면 해당 post에 대한 수정란이 활성화됨. */}
                 {ele.id === targetId && updateFlag ? (
                   <UpdateButtonField
                     onClick={() => onhandleClickUpdateCompleteButton(ele.id)}
@@ -276,13 +277,14 @@ const showDataList = (
 };
 
 //props로 내려오는 데이터들만 관찰하기 위해 따로 ..
-export default function ListGrid({
+export default React.memo(function ListGrid({
   data,
   myId,
   onhandleUpdate,
   onhandleDelete,
   setUpdateInputValue
-}) {
+}) // data, myId, onhandleUpdate, onhandleDelete, setUpdateInputValue
+{
   return (
     <ListContainer>
       <Row>
@@ -296,4 +298,4 @@ export default function ListGrid({
       </Row>
     </ListContainer>
   );
-}
+});

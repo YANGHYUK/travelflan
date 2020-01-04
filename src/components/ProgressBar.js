@@ -26,10 +26,11 @@ export default function ProgressBar() {
   const [percentage, setPercentage] = useState(0);
 
   useEffect(() => {
+    let didMount = false;
     setPercentage(100);
-    return function() {
-      console.log("clean-up");
-    };
+    return (function() {
+      didMount = true;
+    })();
   });
 
   return (

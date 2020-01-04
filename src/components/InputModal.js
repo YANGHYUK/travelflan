@@ -80,40 +80,39 @@ const InputModal = ({
   title,
   image,
   onChangeImage,
-  onChange,
+  onChangeText,
   onSubmit
 }) => {
+  console.log({ title });
   return (
-    <React.Fragment>
-      <ModalContent>
-        <p className="title">TravelStory 작성하기</p>
-        <div className="content">
-          <Input readOnly value={`user : ${userId}`} onChange={() => null} />
-          <Input value={title} placeholder="title" onChange={onChange} />
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: "10px"
-            }}
-          >
-            <Image url={image ? image : "https://via.placeholder.com/150"} />
-            <Input
-              type="file"
-              label="Upload"
-              accept="image/*"
-              onChange={onChangeImage}
-            />
-          </div>
+    <ModalContent>
+      <p className="title">TravelStory 작성하기</p>
+      <div className="content">
+        <Input readOnly value={`user : ${userId}`} onChange={() => null} />
+        <Input value={title} placeholder={"title"} onChange={onChangeText} />
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "10px"
+          }}
+        >
+          <Image url={image ? image : "https://via.placeholder.com/150"} />
+          <Input
+            type="file"
+            label="Upload"
+            accept="image/*"
+            onChange={onChangeImage}
+          />
         </div>
-        <div className="button-wrap">
-          <button onClick={() => onhandleCloseModal(false)}> Cancel </button>
-          <button onClick={onSubmit}> Enroll </button>
-        </div>
-      </ModalContent>
-    </React.Fragment>
+      </div>
+      <div className="button-wrap">
+        <button onClick={() => onhandleCloseModal(false)}> Cancel </button>
+        <button onClick={onSubmit}> Enroll </button>
+      </div>
+    </ModalContent>
   );
 };
 export default InputModal;

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -108,6 +108,7 @@ const doOnChange = (values, errors, name, value) => ({
 });
 
 const Signup = props => {
+  const [didMount, setDidMount] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const [values, setValues] = useState({
@@ -118,6 +119,7 @@ const Signup = props => {
   });
 
   const { errors, email, password } = values;
+
   const onSubmit = () => {
     setLoading(true);
     setTimeout(() => {
@@ -126,7 +128,7 @@ const Signup = props => {
     }, 600);
   };
 
-  const onChange = e => {
+  const onChange = useCallback(e => {
     let { name, value } = e.target;
     const validEmailRegex = RegExp(
       /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -150,7 +152,8 @@ const Signup = props => {
       errors[name] = "";
       setValues(() => doOnChange(values, errors, name, value));
     }
-  };
+  });
+
   const onhandleEnter = e => {
     if (e.key === "Enter") {
       email.length && password.length && !errors.email && !errors.password
@@ -158,6 +161,15 @@ const Signup = props => {
         : false;
     }
   };
+
+  useEffect(() => {
+    setDidMount(true);
+    return () => setDidMount(false);
+  }, []);
+
+  if (!didMount) {
+    return null;
+  }
 
   return (
     <Container>
@@ -203,7 +215,6 @@ const Signup = props => {
                       name="password"
                       value={password || ""}
                       onChange={onChange}
-                      onKeyPress={onhandleEnter}
                       placeholder="password"
                     />
                     <ErrorMessage>{errors.password}</ErrorMessage>

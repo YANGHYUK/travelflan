@@ -6,12 +6,13 @@ export const doCheckToken = () => true;
 
 const Home = props => {
   useEffect(() => {
+    let didMount = false;
     let token = localStorage.getItem("token");
     doCheckToken();
     token ? props.history.push("/main") : props.history.push("/signin");
-    return function() {
-      console.log("clean-up");
-    };
+    return (function() {
+      didMount = true;
+    })();
   }, []);
   return (
     <Container>

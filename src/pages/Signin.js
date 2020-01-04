@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import {
@@ -110,9 +110,11 @@ export const doOnChange = (values, errors, name, value) => ({
 });
 
 const Signin = props => {
+  const [didMount, setDidMount] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const [modalOpen, setModalOpen] = useState(false);
+
+  const UserInfo = useContext(UserInfoContext);
 
   const [values, setValues] = useState({
     errors: { email: "", password: "" },
@@ -123,7 +125,7 @@ const Signin = props => {
 
   const { errors, email, password } = values;
 
-  const onChange = e => {
+  const onChange = useCallback(e => {
     let { name, value } = e.target;
     const validEmailRegex = RegExp(
       /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
@@ -148,9 +150,7 @@ const Signin = props => {
       errors[name] = "";
       setValues(() => doOnChange(values, errors, name, value));
     }
-  };
-
-  const UserInfo = useContext(UserInfoContext);
+  });
 
   const onSubmit = () => {
     setLoading(true);
@@ -196,7 +196,17 @@ const Signin = props => {
     });
   };
 
+  useEffect(() => {
+    setDidMount(true);
+    return () => setDidMount(false);
+  }, []);
+
+  if (!didMount) {
+    return null;
+  }
+
   return (
+    // <UserInfoContext.Provider>
     <Container>
       {modalOpen ? (
         <Modal

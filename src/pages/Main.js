@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import styled from "styled-components";
 import { Row, Column, Container } from "../components/ResponsiveComponents";
 import Header from "../components/Header";
@@ -34,6 +34,10 @@ const ContentBox = styled.div`
 const ID_NUMBER = 101;
 
 const Main = props => {
+  //마운트 체크(클린업 위한)
+  const [didMount, setDidMount] = useState(false);
+
+  //데이터 로딩
   const [loading, setLoading] = useState(true);
 
   //글작성 모달
@@ -120,9 +124,10 @@ const Main = props => {
     setPage(1);
   };
 
-  //post작성 글 및 이미지 입력
-  const onhandleChange = e => {
+  //post작성 글 입력
+  const onhandleChangeText = e => {
     let value = e.target.value;
+    value = value.replace(/^\s+/, "");
     if (value) {
       setFormData({
         ...formData,
@@ -185,6 +190,19 @@ const Main = props => {
     }
   };
 
+  // const dataList = useCallback(
+  //   () =>
+  //     ListGrid(
+  //       (loadData,
+  //       myId,
+  //       image,
+  //       onhandleUpdate,
+  //       onhandleDelete,
+  //       setUpdateInputValue)
+  //     ),
+  //   [loadData]
+  // );
+
   useEffect(() => {
     const tokenCheck = () => {
       let token = localStorage.getItem("token");
@@ -195,7 +213,7 @@ const Main = props => {
     const loadFetchData = async () => {
       let wholeData = await fetchAlbumData();
       let latestOrderedData = wholeData.reverse();
-      if (wholeData) {
+      if (wholeData.length > 0) {
         setData(latestOrderedData);
         setLoadData(latestOrderedData.slice(page * 5, (page + 1) * 5));
         setPage(page + 1);
@@ -203,10 +221,14 @@ const Main = props => {
       }
     };
     loadFetchData();
-    return function() {
-      console.log("clean-up");
-    };
+    //cleanup 함수
+    setDidMount(true);
+    return () => setDidMount(false);
   }, []);
+
+  if (!didMount) {
+    return null;
+  }
 
   return (
     <Container>
@@ -224,7 +246,7 @@ const Main = props => {
             userId={myId}
             title={title}
             image={image}
-            onChange={onhandleChange}
+            onChangeText={onhandleChangeText}
             onChangeImage={onhandleChangeImage}
             onSubmit={onhandleSubmit}
           />
@@ -235,32 +257,20 @@ const Main = props => {
               <div>loading...</div>
             ) : (
               <>
+                {/* {dataList} */}
                 <ListGrid
                   id="listgrid"
-                  data={currentPostTarget === "all" ? loadData : myPostData}
+                  data={
+                    loadData.length && currentPostTarget === "all"
+                      ? loadData
+                      : myPostData
+                  }
                   myId={myId}
                   image={image}
                   onhandleUpdate={onhandleUpdate}
                   onhandleDelete={onhandleDelete}
                   setUpdateInputValue={setUpdateInputValue}
                 />
-                {/* <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    width: "100%",
-                    justifyContent: "flex-end",
-                    paddingRight: "5%"
-                  }}
-                >
-
-                  <CustomButton
-                    name="write +"
-                    width="50px"
-                    height="30px"
-                    onClick={setModalOpen}
-                  />
-                </div> */}
                 <div style={{ maxWidth: "500px" }}>
                   {/* 리스트 추가버튼 */}
                   <StyledButton
@@ -273,7 +283,7 @@ const Main = props => {
               </>
             )}
           </ContentBox>
-          {/* <div
+          {/* <div //내 작성글만 골라보기
             style={{
               position: "fixed",
               top: 10,
