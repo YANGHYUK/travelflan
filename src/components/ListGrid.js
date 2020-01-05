@@ -150,7 +150,6 @@ const showDataList = (
     if (value) {
       setUpdateInputValue(value);
     } else {
-      console.log("hi");
       //변경사항없으면 그전 그대로의 title그대로 저장
       setUpdateInputValue(defaultValue);
     }

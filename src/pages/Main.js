@@ -88,8 +88,6 @@ const Main = props => {
   const onhandleUpdate = targetId => {
     let updateTargetId = targetId;
     if (updateTargetId) {
-      console.log({ title });
-      console.log({ updateInputValue });
       let updateWholeData = data.map(ele => {
         if (ele.id === updateTargetId) {
           if (title.length === 0 && updateInputValue.length !== 0) {
