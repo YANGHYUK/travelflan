@@ -66,7 +66,6 @@ const ModalContent = styled.div`
 
 const DeleteModal = ({ setModalOpen, content, onhandleDelete, targetId }) => {
   const onClickDeleteButton = () => {
-    console.log({ targetId });
     setModalOpen(false);
     onhandleDelete(targetId);
   };

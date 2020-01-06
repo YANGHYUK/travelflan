@@ -190,6 +190,7 @@ const Main = props => {
       setPage(page + 1);
     } else {
       setLoadData(loadData.concat(data.slice(page * 5, (page + 1) * 5)));
+      setPage(page + 1);
     }
   };
 

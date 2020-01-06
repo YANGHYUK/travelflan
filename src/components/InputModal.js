@@ -83,7 +83,6 @@ const InputModal = ({
   onChangeText,
   onSubmit
 }) => {
-  console.log({ title });
   return (
     <ModalContent>
       <p className="title">TravelStory 작성하기</p>
