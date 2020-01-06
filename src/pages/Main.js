@@ -40,7 +40,7 @@ const Main = props => {
   //데이터 로딩
   const [loading, setLoading] = useState(true);
 
-  //글작성 모달
+  //post 작성 모달
   const [modalOpen, setModalOpen] = useState(false);
 
   //전체 데이터
@@ -55,7 +55,7 @@ const Main = props => {
   //내 아이디
   const [myId, setMyId] = useState("");
 
-  //글update 수정 value
+  //post update input value
   const [updateInputValue, setUpdateInputValue] = useState("");
 
   //내 post만 모아놓는 데이터
@@ -182,8 +182,6 @@ const Main = props => {
   const onhandleListLoad = () => {
     //로드 데이터 갯수가 5개 단위가 아닐시에는 새로 불러오는 데이터의 갯수에 대한 조정이 필요하다. 아래는 그 로직
     if (loadData.length % 5 !== 0) {
-      console.log(Math.abs((loadData.length % 5) - 5));
-      console.log(5 - Math.abs(5 - (loadData.length % 5)));
       setLoadData(
         loadData.concat(
           data.slice(
@@ -277,7 +275,6 @@ const Main = props => {
                       : myPostData
                   }
                   myId={myId}
-                  image={image}
                   onhandleUpdate={onhandleUpdate}
                   onhandleDelete={onhandleDelete}
                   setUpdateInputValue={setUpdateInputValue}

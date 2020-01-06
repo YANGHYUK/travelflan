@@ -152,6 +152,15 @@ const Signin = props => {
     }
   });
 
+  const onKeyDown = useCallback(e => {
+    console.log("hi");
+    if (e.keyCode === 13) {
+      email.length && password.length && !errors.email && !errors.password
+        ? onSubmit()
+        : false;
+    }
+  }, []);
+
   const onSubmit = () => {
     setLoading(true);
     setTimeout(() => {
@@ -177,14 +186,6 @@ const Signin = props => {
         resetForm();
       }
     }, 600);
-  };
-
-  const onhandleEnter = e => {
-    if (e.keyCode === 13) {
-      email.length && password.length && !errors.email && !errors.password
-        ? onSubmit()
-        : false;
-    }
   };
 
   const resetForm = () => {
@@ -246,6 +247,7 @@ const Signin = props => {
                       name="email"
                       value={email || ""}
                       onChange={onChange}
+                      onKeyDown={onKeyDown}
                       placeholder="email"
                     />
                     <ErrorMessage>{errors.email}</ErrorMessage>
@@ -256,7 +258,7 @@ const Signin = props => {
                       name="password"
                       value={password || ""}
                       onChange={onChange}
-                      onKeyPress={e => onhandleEnter(e)}
+                      onKeyDown={onKeyDown}
                       placeholder="password"
                     />
                     <ErrorMessage>{errors.password}</ErrorMessage>
