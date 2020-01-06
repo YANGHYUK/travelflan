@@ -182,9 +182,16 @@ const Main = props => {
   const onhandleListLoad = () => {
     //로드 데이터 갯수가 5개 단위가 아닐시에는 새로 불러오는 데이터의 갯수에 대한 조정이 필요하다. 아래는 그 로직
     if (loadData.length % 5 !== 0) {
+      console.log(Math.abs((loadData.length % 5) - 5));
+      console.log(5 - Math.abs(5 - (loadData.length % 5)));
       setLoadData(
         loadData.concat(
-          data.slice(page * 5, page * 5 + Math.abs(5 - (loadData.length % 5)))
+          data.slice(
+            5 * (1 + page) - Math.abs(5 - (loadData.length % 5)),
+            5 * (1 + page) -
+              Math.abs(5 - (loadData.length % 5)) +
+              Math.abs(5 - (loadData.length % 5))
+          )
         )
       );
       setPage(page + 1);
